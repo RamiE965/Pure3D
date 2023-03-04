@@ -18,18 +18,22 @@ public class Renderer3D {
         pane.add(horizontalSlider, BorderLayout.SOUTH); 
         JSlider verticalSlider = new JSlider(SwingConstants.VERTICAL, 0, 180, 90); 
         pane.add(verticalSlider, BorderLayout.EAST);
-
+        
         // Rendering Class
         JPanel renderWindow = new JPanel() {
             public void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g;
+                Graphics2D g2 = (Graphics2D) g; // hacky bit
                 g2.setColor(Color.WHITE);
                 g2.fillRect(0,0, getWidth(), getHeight());
 
                 ArrayList<Triangle> Square = new ArrayList<Triangle>();
-                Square.add(new Triangle(new Vertex(100, 0, 0),
-                                        new Vertex(0, 100, 0),
-                                        new Vertex(100, 0, 100),
+                Square.add(new Renderer3D.Triangle(new Renderer3D.Vertex(0, 0, 0),
+                                        new Renderer3D.Vertex(0, 100, 0),
+                                        new Renderer3D.Vertex(100, 0, 0),
+                                        Color.RED));
+                Square.add(new Renderer3D.Triangle(new Renderer3D.Vertex(100, 0, 0),
+                                        new Renderer3D.Vertex(100, 100, 0),
+                                        new Renderer3D.Vertex(0, 100, 0),
                                         Color.RED));
         
                 // draw loop
@@ -46,12 +50,13 @@ public class Renderer3D {
             }
         };
         pane.add(renderWindow, BorderLayout.CENTER);
+
         window.setSize(1600, 900);
         window.setVisible(true);
     }
     
     // Vertex Class & Constructor
-    class Vertex {
+    static class Vertex {
         double x;
         double y;
         double z;
@@ -63,7 +68,7 @@ public class Renderer3D {
     }
     
     // Triangle Class & Constructor
-    class Triangle {
+    static class Triangle {
         Vertex v1;
         Vertex v2;
         Vertex v3;
