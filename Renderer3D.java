@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.awt.geom.*;
+import java.awt.image.BufferedImage;
 
 public class Renderer3D {
 
@@ -22,7 +24,25 @@ public class Renderer3D {
             public void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setColor(Color.WHITE);
-                g2.fillRect(0,0, getWidth()*2, getHeight());
+                g2.fillRect(0,0, getWidth(), getHeight());
+
+                ArrayList<Triangle> Square = new ArrayList<Triangle>();
+                Square.add(new Triangle(new Vertex(100, 0, 0),
+                                        new Vertex(0, 100, 0),
+                                        new Vertex(100, 0, 100),
+                                        Color.RED));
+        
+                // draw loop
+                g2.translate(getWidth() / 2, getHeight() / 2);
+                g2.setColor(Color.BLACK);
+                for (Triangle t : Square) {
+                    Path2D path = new Path2D.Double();
+                    path.moveTo(t.v1.x, t.v1.y);
+                    path.lineTo(t.v2.x, t.v2.y);
+                    path.lineTo(t.v3.x, t.v3.y);
+                    path.closePath();
+                    g2.draw(path);
+                }
             }
         };
         pane.add(renderWindow, BorderLayout.CENTER);
