@@ -22,11 +22,11 @@ public class Renderer3D {
             public void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setColor(Color.WHITE);
-                g2.fillRect(0,0, getHeight(), getWidth());
+                g2.fillRect(0,0, getWidth()*2, getHeight());
             }
         };
         pane.add(renderWindow, BorderLayout.CENTER);
-        window.setSize(800, 800);
+        window.setSize(1600, 900);
         window.setVisible(true);
     }
     
