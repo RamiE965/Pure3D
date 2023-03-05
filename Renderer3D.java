@@ -49,56 +49,34 @@ public class Renderer3D {
                 
 
 
-                double heading = Math.toRadians(horizontalSlider.getValue());
+                double horizontal = Math.toRadians(horizontalSlider.getValue());
                 Matrix3 horizontalTransform = new Matrix3(new double[] {
-                    Math.cos(heading), 0, -Math.cos(heading),
+                    Math.cos(horizontal), 0, -Math.cos(horizontal),
                     0, 1, 0,
-                    Math.sin(heading), 0, Math.sin(heading)
+                    Math.sin(horizontal), 0, Math.sin(horizontal)
                 });
         
+                double vertical = Math.toRadians(verticalSlider.getValue());
+                Matrix3 verticalTransform = new Matrix3(new double[] {
+                    1, 0, 0,
+                    0, Math.cos(vertical), Math.sin(vertical),
+                    0, -Math.sin(vertical), Math.cos(vertical)
+                });
+                
+                Matrix3 transform = horizontalTransform.multiply(verticalTransform);
+
                 for (Triangle t : Square) {
                     Path2D path = new Path2D.Double();
                     double offSetY = (t.v1.y + t.v2.y)/2;
-                    Vertex v1 = horizontalTransform.transform(t.v1);
-                    Vertex v2 = horizontalTransform.transform(t.v2);
-                    Vertex v3 = horizontalTransform.transform(t.v3);
-                double heading = Math.toRadians(horizontalSlider.getValue());
-                Matrix3 horizontalTransform = new Matrix3(new double[] {
-                    Math.cos(heading), 0, -Math.cos(heading),
-                    0, 1, 0,
-                    Math.sin(heading), 0, Math.sin(heading)
-                });
-        
-                for (Triangle t : Square) {
-                    Path2D path = new Path2D.Double();
-                    double offSetY = (t.v1.y + t.v2.y)/2;
-                    Vertex v1 = horizontalTransform.transform(t.v1);
-                    Vertex v2 = horizontalTransform.transform(t.v2);
-                    Vertex v3 = horizontalTransform.transform(t.v3);
+                    Vertex v1 = transform.transform(t.v1);
+                    Vertex v2 = transform.transform(t.v2);
+                    Vertex v3 = transform.transform(t.v3);
                     path.moveTo(v1.x, v1.y-offSetY);
                     path.lineTo(v2.x, v2.y-offSetY);
                     path.lineTo(v3.x, v3.y-offSetY);
                     path.closePath();
                     g2.draw(path);
                 }
-
-                
-                Matrix3 headingTransform = new Matrix3(new double[] {
-                    Math.cos(heading), 0, Math.sin(heading),
-                    0, 1, 0,
-                    -Math.sin(heading), 0, Math.cos(heading)
-                });
-
-                double verticalSlide = Math.toRadians(verticalSlider.getValue());
-                Matrix3 verticalTransform = new Matrix3(new double[] {
-                    1, 0, 0,
-                    0, Math.cos(verticalSlide), Math.sin(verticalSlide),
-                    0, -Math.sin(verticalSlide), Math.cos(verticalSlide)
-                });
-                Matrix3 transform = headingTransform.multiply(verticalTransform);
-        
-                
-                
             }
         };
 
