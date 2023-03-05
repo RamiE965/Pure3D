@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class Renderer3D {
 
     public static void main(String[] args) {
-        // create a Window
+        // Window
         JFrame window = new JFrame(); 
         Container pane = window.getContentPane();
         pane.setLayout(new BorderLayout()); 
@@ -25,7 +25,6 @@ public class Renderer3D {
                 Graphics2D g2 = (Graphics2D) g; // hacky bit
                 g2.setColor(Color.WHITE);
                 g2.fillRect(0,0, getWidth(), getHeight());
-
                 
                 ArrayList<Triangle> triangle = new ArrayList<Triangle>();
                 triangle.add(new Triangle(new Vertex(0, 0, 100),
@@ -43,12 +42,11 @@ public class Renderer3D {
                                         new Vertex(0, 100, 0),
                                         Color.RED));
         
-                // draw loop
+                // draw background
                 g2.translate(getWidth() / 2, getHeight() / 2);
                 g2.setColor(Color.BLACK);
                 
-
-
+                // matrix transformations
                 double horizontal = Math.toRadians(horizontalSlider.getValue());
                 Matrix3 horizontalTransform = new Matrix3(new double[] {
                     Math.cos(horizontal), 0, -Math.cos(horizontal),
@@ -62,9 +60,9 @@ public class Renderer3D {
                     0, Math.cos(vertical), Math.sin(vertical),
                     0, -Math.sin(vertical), Math.cos(vertical)
                 });
-                
                 Matrix3 transform = horizontalTransform.multiply(verticalTransform);
 
+                // draw loop
                 for (Triangle t : Square) {
                     Path2D path = new Path2D.Double();
                     double offSetY = (t.v1.y + t.v2.y)/2;
@@ -79,8 +77,6 @@ public class Renderer3D {
                 }
             }
         };
-
-
         horizontalSlider.addChangeListener(e -> renderWindow.repaint());
         verticalSlider.addChangeListener(e -> renderWindow.repaint());
         
@@ -88,7 +84,6 @@ public class Renderer3D {
 
         window.setSize(1600, 900);
         window.setVisible(true);
-        
     }
     
     // Vertex Class & Constructor
@@ -137,6 +132,7 @@ public class Renderer3D {
             }
             return new Matrix3(result);
         }
+
         Vertex transform(Vertex vertex) {
             return new Vertex(
                 vertex.x * values[0] + vertex.y * values[3] + vertex.z * values[6],
