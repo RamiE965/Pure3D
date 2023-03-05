@@ -6,6 +6,11 @@ import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
+// TODO:
+// Fix some weirdness: ONE TRIANGLE ALWAYS ON TOP
+// Add Shading
+// Add More Shapes
+
 public class Renderer3D {
     public static void main(String[] args) {
         // Select Object to draw & Initialization
@@ -91,7 +96,7 @@ public class Renderer3D {
                 });
                 Matrix3 transform = horizontalTransform.multiply(verticalTransform);
                 BufferedImage img = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-                // draw loop
+                // Draw Loop
                 for (Triangle t : shape) {
                     Vertex v1 = transform.transform(t.v1);
                     Vertex v2 = transform.transform(t.v2);
@@ -104,7 +109,7 @@ public class Renderer3D {
                     v3.x += getWidth() / 2;
                     v3.y += getHeight() / 2;
 
-                    // compute rectangular bounds for triangle
+                    // Rectangular bounds computations
                     int minX = (int) Math.max(0, Math.ceil(Math.min(v1.x, Math.min(v2.x, v3.x))));
                     int maxX = (int) Math.min(img.getWidth() - 1, Math.floor(Math.max(v1.x, Math.max(v2.x, v3.x))));
                     int minY = (int) Math.max(0, Math.ceil(Math.min(v1.y, Math.min(v2.y, v3.y))));
