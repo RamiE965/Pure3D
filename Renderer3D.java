@@ -27,13 +27,13 @@ public class Renderer3D {
                 g2.fillRect(0,0, getWidth(), getHeight());
 
                 ArrayList<Triangle> Square = new ArrayList<Triangle>();
-                Square.add(new Renderer3D.Triangle(new Renderer3D.Vertex(0, 0, 0),
-                                        new Renderer3D.Vertex(0, 100, 0),
-                                        new Renderer3D.Vertex(100, 0, 0),
+                Square.add(new Triangle(new Vertex(0, 0, 0),
+                                        new Vertex(0, 100, 0),
+                                        new Vertex(100, 0, 0),
                                         Color.RED));
-                Square.add(new Renderer3D.Triangle(new Renderer3D.Vertex(100, 0, 0),
-                                        new Renderer3D.Vertex(100, 100, 0),
-                                        new Renderer3D.Vertex(0, 100, 0),
+                Square.add(new Triangle(new Vertex(100, 0, 0),
+                                        new Vertex(100, 100, 0),
+                                        new Vertex(0, 100, 0),
                                         Color.RED));
         
                 // draw loop
@@ -56,7 +56,7 @@ public class Renderer3D {
     }
     
     // Vertex Class & Constructor
-    static class Vertex {
+    public static class Vertex {
         double x;
         double y;
         double z;
@@ -68,7 +68,7 @@ public class Renderer3D {
     }
     
     // Triangle Class & Constructor
-    static class Triangle {
+    public static class Triangle {
         Vertex v1;
         Vertex v2;
         Vertex v3;
@@ -78,6 +78,35 @@ public class Renderer3D {
             this.v2 = v2;
             this.v3 = v3;
             this.color = color;
+        }
+    }
+
+    // defines a 3x3 Matrix Class with transform method
+    // and multiplication method and a constructor
+    public static class Matrix3 {
+        Double[] values;
+
+        Matrix3(Double[] values) {
+            this.values = values;
+        }
+
+        Matrix3 multiply(Matrix3 matrix) {
+            Double[] result = new Double[9];
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
+                    for (int i = 0; i < 3; i++) {
+                        result[row * 3 + col] += this.values[row * 3 + i] + matrix.values[i * 3 + col]; // p smart what can i say
+                    }
+                }
+            }
+            return new Matrix3(result);
+        }
+        Vertex transform(Vertex vertex) {
+            return new Vertex(
+                vector.x * values[0] + vector.y * values[3] + vector.z * values[6],
+                vector.x * values[1] + vector.y * values[4] + vector.z * values[7], 
+                vector.x * values[2] + vector.y * values[5] + vector.z * values[8]
+            );
         }
     }
 }
