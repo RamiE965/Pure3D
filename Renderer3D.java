@@ -39,20 +39,58 @@ public class Renderer3D {
                 // draw loop
                 g2.translate(getWidth() / 2, getHeight() / 2);
                 g2.setColor(Color.BLACK);
+                
+
+
+                double heading = Math.toRadians(horizontalSlider.getValue());
+                Matrix3 horizontalTransform = new Matrix3(new double[] {
+                    Math.cos(heading), 0, -Math.cos(heading),
+                    0, 1, 0,
+                    Math.sin(heading), 0, Math.sin(heading)
+                });
+        
                 for (Triangle t : Square) {
                     Path2D path = new Path2D.Double();
-                    path.moveTo(t.v1.x, t.v1.y);
-                    path.lineTo(t.v2.x, t.v2.y);
-                    path.lineTo(t.v3.x, t.v3.y);
+                    double offSetY = (t.v1.y + t.v2.y)/2;
+                    Vertex v1 = horizontalTransform.transform(t.v1);
+                    Vertex v2 = horizontalTransform.transform(t.v2);
+                    Vertex v3 = horizontalTransform.transform(t.v3);
+                    path.moveTo(v1.x, v1.y-offSetY);
+                    path.lineTo(v2.x, v2.y-offSetY);
+                    path.lineTo(v3.x, v3.y-offSetY);
                     path.closePath();
                     g2.draw(path);
                 }
+
+                
+                Matrix3 headingTransform = new Matrix3(new double[] {
+                    Math.cos(heading), 0, Math.sin(heading),
+                    0, 1, 0,
+                    -Math.sin(heading), 0, Math.cos(heading)
+                });
+
+                double verticalSlide = Math.toRadians(verticalSlider.getValue());
+                Matrix3 verticalTransform = new Matrix3(new double[] {
+                    1, 0, 0,
+                    0, Math.cos(verticalSlide), Math.sin(verticalSlide),
+                    0, -Math.sin(verticalSlide), Math.cos(verticalSlide)
+                });
+                Matrix3 transform = headingTransform.multiply(verticalTransform);
+        
+                
+                
             }
         };
+
+
+        horizontalSlider.addChangeListener(e -> renderWindow.repaint());
+        verticalSlider.addChangeListener(e -> renderWindow.repaint());
+        
         pane.add(renderWindow, BorderLayout.CENTER);
 
         window.setSize(1600, 900);
         window.setVisible(true);
+        
     }
     
     // Vertex Class & Constructor
@@ -84,14 +122,14 @@ public class Renderer3D {
     // defines a 3x3 Matrix Class with transform method
     // and multiplication method and a constructor
     public static class Matrix3 {
-        Double[] values;
+        double[] values;
 
-        Matrix3(Double[] values) {
+        Matrix3(double[] values) {
             this.values = values;
         }
 
         Matrix3 multiply(Matrix3 matrix) {
-            Double[] result = new Double[9];
+            double[] result = new double[9];
             for (int row = 0; row < 3; row++) {
                 for (int col = 0; col < 3; col++) {
                     for (int i = 0; i < 3; i++) {
@@ -103,9 +141,9 @@ public class Renderer3D {
         }
         Vertex transform(Vertex vertex) {
             return new Vertex(
-                vector.x * values[0] + vector.y * values[3] + vector.z * values[6],
-                vector.x * values[1] + vector.y * values[4] + vector.z * values[7], 
-                vector.x * values[2] + vector.y * values[5] + vector.z * values[8]
+                vertex.x * values[0] + vertex.y * values[3] + vertex.z * values[6],
+                vertex.x * values[1] + vertex.y * values[4] + vertex.z * values[7], 
+                vertex.x * values[2] + vertex.y * values[5] + vertex.z * values[8]
             );
         }
     }
