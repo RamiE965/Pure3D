@@ -1,4 +1,4 @@
-# Pure3DRenderer
+# Pure3D -- A Java 3D Renderer
 An elementary pure Java Orthographic Projection 3D Renderer created for MadHacks 2023. 
 
 ## Usage 
