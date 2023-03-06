@@ -22,6 +22,7 @@ The downside is that it's pretty slow and unoptimized. The upside of this is tha
  
 ## Demonstrations 
 Note that the pictures are unrepresentative (especially the none tetrahedron ones) and I was unable to upload Gifs to Github for some reason. 
+
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081983670698651828/image.png)
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081983802039091240/image.png)
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081984078657618093/image.png)
