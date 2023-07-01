@@ -21,8 +21,6 @@ We built this 3D Renderer project purely for fun, without relying on APIs or lib
 The downside is that it's pretty slow and unoptimized. The upside of this is that we have a better understanding of graphics from the ground up and we'll feel more comfortable using OpenGL or any other similar tool in the future. It also serves as an excellent application for some of the linear algebra and multivariable caluclus concepts we've learned.  
  
 ## Demonstrations 
-Note that the pictures are unrepresentative (especially the none tetrahedron ones) and I was unable to upload Gifs to Github for some reason. 
-
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081983670698651828/image.png)
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081983802039091240/image.png)
 ![Picture Demonstration](https://cdn.discordapp.com/attachments/1081421151194075146/1081984078657618093/image.png)
